@@ -27,8 +27,13 @@ class Schedule(models.Model):
             (Q(start_time__lte=self.end_time) & Q(end_time__gte=self.end_time)) |
             (Q(start_time__gte=self.start_time) & Q(end_time__lte=self.end_time))
         ))
-        print(validate_schedule,'wew')
+
+
         if validate_schedule:
             print("error catch")
             raise ValidationError("overlapping")
+        
+
+        if self.start_time >= self.end_time:
+            raise ValidationError("start time cannot be greater than your end time.")
         
