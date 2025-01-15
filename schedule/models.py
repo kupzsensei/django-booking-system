@@ -23,10 +23,9 @@ class Schedule(models.Model):
     def clean(self):
         validate_schedule = Schedule.objects.filter(
             Q(room=self.room) & (
-            (Q(start_time__gte=self.start_time) & Q(start_time__lte=self.end_time)) |
-            (Q(end_time__gte=self.start_time) & Q(end_time__lte=self.end_time)) |
-            (Q(start_time__lte=self.start_time) & Q(end_time__lte=self.end_time)) |
-            (Q(start_time__gte=self.start_time) & Q(end_time__gte=self.end_time))
+            (Q(start_time__lte=self.start_time) & Q(end_time__gte=self.start_time)) |
+            (Q(start_time__lte=self.end_time) & Q(end_time__gte=self.end_time)) |
+            (Q(start_time__gte=self.start_time) & Q(end_time__lte=self.end_time))
         ))
         print(validate_schedule,'wew')
         if validate_schedule:
